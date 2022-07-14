@@ -10,4 +10,10 @@ module.exports = {
       responseHelper(err, res, data, statusCode);
     });
   },
+
+  getAllStoredResults: (req, res) => {
+    searchService.getAllStoredResults(req, (err, data, statusCode) => {
+      responseHelper(err, res, data, statusCode);
+    });
+  },
 };
