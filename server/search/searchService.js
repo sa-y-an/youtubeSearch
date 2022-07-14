@@ -100,7 +100,6 @@ module.exports = {
       const cachedIds = new Set();
       existingIds.forEach((el) => cachedIds.add(el.ytId));
 
-      console.log(cachedIds);
       const newdata = [];
       data.forEach((el) => {
         if (!cachedIds.has(el.ytId)) {
