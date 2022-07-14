@@ -5,9 +5,18 @@ const validators = require('../utils/validators');
 
 const thumbnailSchema = new mongoose.Schema({
   _id: false,
-  medium: validators.urlValidator,
-  default: validators.urlValidator,
-  small: validators.urlValidator,
+  mediumURL: {
+    type: String,
+    validate: validators.urlValidator,
+  },
+  defaultURL: {
+    type: String,
+    validate: validators.urlValidator,
+  },
+  smallURL: {
+    type: String,
+    validate: validators.urlValidator,
+  },
 });
 
 module.exports = {

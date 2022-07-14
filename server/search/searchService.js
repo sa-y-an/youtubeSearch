@@ -4,6 +4,7 @@ const { google } = require('googleapis');
 const commonConfig = require('../commonconfig.json');
 const searchConfig = require('./searchConfig.json');
 const responseMessage = require('../utils/responseMessage');
+const Search = require('./searchModel');
 
 async function mainJob() {
   try {
@@ -14,6 +15,7 @@ async function mainJob() {
       publishedAfter: searchConfig.publishedAfter,
       type: 'video',
       oder: 'date',
+      maxResults: 5,
     };
 
     const youtubeData = await google.youtube('v3').search.list(searchQuery);
@@ -27,19 +29,14 @@ async function mainJob() {
         description: item.snippet.description,
         publishTime: item.snippet.publishTime,
         thumbnailURLs: {
-          default: item.snippet.thumbnails.default.url,
-          medium: item.snippet.thumbnails.medium.url,
-          high: item.snippet.thumbnails.high.url,
+          defaultURL: item.snippet.thumbnails.default.url,
+          mediumURL: item.snippet.thumbnails.medium.url,
+          highURL: item.snippet.thumbnails.high.url,
         },
       });
     });
 
-    const metadata = data.pageInfo;
-    const totalResults = {
-      metadata,
-      results,
-    };
-    return totalResults;
+    return results;
   } catch (err) {
     console.log(err);
   }
@@ -50,8 +47,25 @@ module.exports = {
     let response;
     try {
       const data = await mainJob();
+      const existingIds = await Search.find().select('ytId -_id');
+      // using hashset to cache the results
+      const cachedIds = new Set();
+      existingIds.forEach((el) => cachedIds.add(el.ytId));
+
+      console.log(cachedIds);
+      const newdata = [];
+      data.forEach((el) => {
+        if (!cachedIds.has(el.ytId)) {
+          newdata.push(el);
+        }
+      });
+      // console.log(newdata);
+      const len = newdata.length;
+      const result = await Search.insertMany(newdata);
+
       response = new responseMessage.GenericSuccessMessage();
-      response.data = data;
+      response.len = len;
+      response.data = result;
       return callback(null, response, response.code);
     } catch (err) {
       console.log('ERROR ::: ', err);

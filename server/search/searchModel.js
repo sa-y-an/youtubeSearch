@@ -17,7 +17,6 @@ const searchSchema = mongoose.Schema(
     },
     description: {
       type: String,
-      required: true,
       trim: true,
     },
     publishTime: {
@@ -32,6 +31,7 @@ const searchSchema = mongoose.Schema(
 );
 
 searchSchema.plugin(mongoosePaginate);
+searchSchema.index({ title: 'text', description: 'text' });
 // create the model for Search Results and expose it to the app
 module.exports = mongoose.mainConnection.model(
   'Search',
