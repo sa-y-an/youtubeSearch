@@ -60,6 +60,8 @@ process.on('SIGINT', async function () {
 
 // If the Node process exits using exit, close both the Mongoose connection
 process.on('exit', async function () {
+  const searchCronJon = require('./server/search/searchCronJob');
+  searchCronJon.stop();
   mongoose.mainConnection.close(function () {
     console.log(
       'Mongoose main connection disconnected through app termination'
