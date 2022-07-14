@@ -23,7 +23,10 @@ const searchSchema = mongoose.Schema(
       type: Date,
       required: true,
     },
-    thumbnails: thumbnailModel,
+    thumbnailURLs: {
+      type: thumbnailModel,
+      required: true,
+    },
   },
   {
     timestamps: true,

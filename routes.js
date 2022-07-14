@@ -9,5 +9,5 @@ module.exports = function (app) {
   app.use('/healthcheck', healthCheck);
 
   /**Serach related routes */
-  app.use('/get/initialize', searchRouter);
+  app.use('/v1/api/scrape', searchRouter);
 };

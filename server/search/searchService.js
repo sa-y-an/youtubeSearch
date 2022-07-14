@@ -12,8 +12,10 @@ const basicFilter = {
   description: 1,
   publishedTime: 1,
   thumbnails: 1,
+  _id: 0,
 };
 
+/** Helper Function to Paginate The API */
 async function getPaginatedResults(query, options, callback) {
   let response;
   try {
@@ -86,7 +88,8 @@ async function mainJob() {
 }
 
 module.exports = {
-  getResults: async (req, callback) => {
+  /**API to check if new results exists and if it does store them in database */
+  generateNewResults: async (req, callback) => {
     let response;
     try {
       const data = await mainJob();
@@ -119,6 +122,7 @@ module.exports = {
     }
   },
 
+  /** API to fetch all the stored Results in a paginated fashion */
   getAllStoredResults: (req, callback) => {
     const query = {};
     const limit = parseInt(req.query.limit) || 10;
@@ -131,5 +135,31 @@ module.exports = {
       sort: sort,
     };
     getPaginatedResults(query, options, callback);
+  },
+
+  /**Function to search data based on the given query */
+  searchAllStoredResults: async (req, callback) => {
+    const searchText = req.query.text;
+
+    if (!searchText || searchText.length > 40) {
+      const response = new responseMessage.GenericFailureMessage();
+      return callback(null, response, parseInt(response.code));
+    }
+
+    const searchQuery = {
+      $text: {
+        $search: searchText,
+      },
+    };
+    const limit = parseInt(req.query.limit) || 10;
+    const page = parseInt(req.query.page) || 1;
+    const sort = req.query.sort || 'name';
+    const options = {
+      page: page,
+      limit: limit,
+      select: basicFilter,
+      sort: sort,
+    };
+    getPaginatedResults(searchQuery, options, callback);
   },
 };

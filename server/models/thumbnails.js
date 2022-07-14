@@ -13,7 +13,7 @@ const thumbnailSchema = new mongoose.Schema({
     type: String,
     validate: validators.urlValidator,
   },
-  smallURL: {
+  highURL: {
     type: String,
     validate: validators.urlValidator,
   },
