@@ -45,4 +45,4 @@ dump.rdb
 package-lock.json
 
 .vscode
-
+*.env

@@ -1,0 +1,10 @@
+'use strict'
+
+const app = require('../app');
+const port = process.env.PORT || 8004;
+const environment = process.env.NODE_ENV || 'development';
+
+app.listen(port, () => {
+    console.log(`Starting ${environment} server is running on port ${port}`);
+})
+
