@@ -48,7 +48,9 @@ module.exports = {
     try {
       const data = await mainJob();
       const existingIds = await Search.find().select('ytId -_id');
+
       // using hashset to cache the results
+      // to be replaced by redis
       const cachedIds = new Set();
       existingIds.forEach((el) => cachedIds.add(el.ytId));
 
@@ -59,7 +61,7 @@ module.exports = {
           newdata.push(el);
         }
       });
-      // console.log(newdata);
+
       const len = newdata.length;
       const result = await Search.insertMany(newdata);
 
