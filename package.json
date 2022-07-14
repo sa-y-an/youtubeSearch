@@ -1,0 +1,15 @@
+{
+  "name": "youtube_search",
+  "version": "1.0.0",
+  "description": "\"An API to search youtube for predefined key word, and store the results in a DB\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "\"Search",
+    "API\""
+  ],
+  "author": "\"Sayan Mondal (dgpmondal@gmail.com)",
+  "license": "ISC"
+}
