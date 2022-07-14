@@ -1,7 +1,7 @@
 'use strict'
 
 const environment = process.env.NODE_ENV;
-let mongoMainHost, mongoMainDB, mongoMainUser, mongoMainPass, gmail, gmailPass, gmailPort, gmailHost;
+let mongoMainHost, mongoMainDB, mongoMainUser, mongoMainPass, gmail, gmailPass, gmailPort, gmailHost, ytApiKey1;
 
 if (environment === 'production') {
 
@@ -15,10 +15,7 @@ if (environment === 'production') {
     mongoMainUser = process.env.DEV_MONGO_USERNAME;
     mongoMainPass = process.env.DEV_MONGO_PASSWORD;
 
-    gmail = process.env.GMAIL_DEV
-    gmailPass = process.env.GMAIL_PASSWORD_DEV
-    gmailPort = process.env.GMAIL_PORT_DEV
-    gmailHost = process.env.HOST_DEV
+    ytApiKey1 = process.env.YT_API_KEY1;
 
 }
 
@@ -40,3 +37,6 @@ global.gmail = gmail;
 global.gmailPass = gmailPass;
 global.gmailPort = gmailPort;
 global.gmailHost = gmailHost;
+
+// Youtube API Keys
+global.YT_API_KEY1 = ytApiKey1;
