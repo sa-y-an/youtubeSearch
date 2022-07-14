@@ -1,22 +1,26 @@
-'use strict'
+'use strict';
 
 const environment = process.env.NODE_ENV;
-let mongoMainHost, mongoMainDB, mongoMainUser, mongoMainPass, gmail, gmailPass, gmailPort, gmailHost, ytApiKey1;
+let mongoMainHost,
+  mongoMainDB,
+  mongoMainUser,
+  mongoMainPass,
+  gmail,
+  gmailPass,
+  gmailPort,
+  gmailHost,
+  ytApiKey1;
 
 if (environment === 'production') {
-
-    gmail = process.env.GMAIL_PROD;
-    gmailPass = process.env.GMAIL_PASSWORD_PROD;
-
+  gmail = process.env.GMAIL_PROD;
+  gmailPass = process.env.GMAIL_PASSWORD_PROD;
 } else if (environment === 'development') {
+  mongoMainHost = process.env.DEV_MONGO_MAIN_HOST;
+  mongoMainDB = process.env.DEV_MONGO_MAIN_DB;
+  mongoMainUser = process.env.DEV_MONGO_USERNAME;
+  mongoMainPass = process.env.DEV_MONGO_PASSWORD;
 
-    mongoMainHost = process.env.DEV_MONGO_MAIN_HOST;
-    mongoMainDB = process.env.DEV_MONGO_MAIN_DB;
-    mongoMainUser = process.env.DEV_MONGO_USERNAME;
-    mongoMainPass = process.env.DEV_MONGO_PASSWORD;
-
-    ytApiKey1 = process.env.YT_API_KEY1;
-
+  ytApiKey1 = process.env.YT_API_KEY1;
 }
 
 global.ENVIRONMENT = environment;

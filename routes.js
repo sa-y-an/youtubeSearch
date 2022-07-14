@@ -1,7 +1,7 @@
-'use strict'
+'use strict';
 
-const healthCheck = require('./server/utils/healthCheck')
+const healthCheck = require('./server/utils/healthCheck');
 
 module.exports = function (app) {
-    app.use('/healthcheck', healthCheck);
-}
+  app.use('/healthcheck', healthCheck);
+};
