@@ -2,15 +2,21 @@
 
 const { google } = require('googleapis');
 const commonConfig = require('../commonconfig.json');
+const searchConfig = require('./searchConfig.json');
 const responseMessage = require('../utils/responseMessage');
 
-async function main() {
+async function mainJob() {
   try {
-    const youtubeData = await google.youtube('v3').search.list({
+    const searchQuery = {
       key: YT_API_KEY1,
       part: 'snippet',
       q: commonConfig.query,
-    });
+      publishedAfter: searchConfig.publishedAfter,
+      type: 'video',
+      oder: 'date',
+    };
+
+    const youtubeData = await google.youtube('v3').search.list(searchQuery);
 
     const { data } = youtubeData;
     const results = [];
@@ -27,7 +33,13 @@ async function main() {
         },
       });
     });
-    return results;
+
+    const metadata = data.pageInfo;
+    const totalResults = {
+      metadata,
+      results,
+    };
+    return totalResults;
   } catch (err) {
     console.log(err);
   }
@@ -37,7 +49,7 @@ module.exports = {
   getResults: async (req, callback) => {
     let response;
     try {
-      const data = await main();
+      const data = await mainJob();
       response = new responseMessage.GenericSuccessMessage();
       response.data = data;
       return callback(null, response, response.code);
