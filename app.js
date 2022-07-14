@@ -41,11 +41,15 @@ mongoose.mainConnection.on('error', function (err) {
 // When the connection is disconnected
 mongoose.mainConnection.on('disconnected', function () {
   console.log('Mongoose main connection disconnected');
+  const searchCronJon = require('./server/search/searchCronJob');
+  searchCronJon.stop();
 });
 
 //--------------------------------------PROCESS EVENTS CONNECTION CLOSURES--------------------------------------------//
 // If the Node process ends using SIGINT, close both the Mongoose connection
 process.on('SIGINT', async function () {
+  const searchCronJon = require('./server/search/searchCronJob');
+  searchCronJon.stop();
   mongoose.mainConnection.close(function () {
     console.log(
       'Mongoose main connection disconnected through app termination'
