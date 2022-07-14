@@ -2,6 +2,7 @@
 
 const { google } = require('googleapis');
 const commonConfig = require('../commonconfig.json');
+const responseMessage = require('../utils/responseMessage');
 
 async function main() {
   try {
@@ -12,14 +13,38 @@ async function main() {
     });
 
     const { data } = youtubeData;
+    const results = [];
     data.items.forEach((item) => {
-      console.log(
-        `Title : ${item.snippet.title}\nDescription ${item.snippet.description}`
-      );
+      results.push({
+        ytId: item.id.videoId,
+        title: item.snippet.title,
+        description: item.snippet.description,
+        publishTime: item.snippet.publishTime,
+        thumbnailURLs: {
+          default: item.snippet.thumbnails.default.url,
+          medium: item.snippet.thumbnails.medium.url,
+          high: item.snippet.thumbnails.high.url,
+        },
+      });
     });
+    return results;
   } catch (err) {
     console.log(err);
   }
 }
 
-main();
+module.exports = {
+  getResults: async (req, callback) => {
+    let response;
+    try {
+      const data = await main();
+      response = new responseMessage.GenericSuccessMessage();
+      response.data = data;
+      return callback(null, response, response.code);
+    } catch (err) {
+      console.log('ERROR ::: ', err);
+      response = new responseMessage.GenericFailureMessage();
+      return callback(null, response, response.code);
+    }
+  },
+};
