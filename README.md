@@ -25,7 +25,7 @@
 
 ### Setup
 
-- Create a `.env` file corrosponding to the values in `example.env` and put it inside the config folder
+- Create a `.env` file corrosponding to the values in [example.env](example.env) and put it inside the config folder
 - This project uses MongoDB and Redis as DB and a cache service
 - So you need to create create either a mongo cloud instance and a redis cloud instance and put corrosponding values in the .env file
 - You may refer to https://cloud.mongodb.com/ and https://app.redislabs.com/ to create your instances
