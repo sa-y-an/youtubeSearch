@@ -52,7 +52,7 @@ mongoose.mainConnection.on('disconnected', function () {
 process.on('SIGINT', async function () {
   const searchCronJon = require('./server/search/searchCronJob');
   searchCronJon.stop();
-  await redisClient.quit();
+  await redisClient.disconnect();
   mongoose.mainConnection.close(function () {
     console.log(
       'Mongoose main connection disconnected through app termination'
@@ -65,7 +65,7 @@ process.on('SIGINT', async function () {
 process.on('exit', async function () {
   const searchCronJon = require('./server/search/searchCronJob');
   searchCronJon.stop();
-  await redisClient.quit();
+  await redisClient.disconnect();
   mongoose.mainConnection.close(function () {
     console.log(
       'Mongoose main connection disconnected through app termination'

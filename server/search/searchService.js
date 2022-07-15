@@ -123,7 +123,7 @@ module.exports = {
       response.data = result;
       return callback(null, response, response.code);
     } catch (err) {
-      console.log('ERROR ::: ', err);
+      console.log('ERROR in generate try catch ::: ', err);
       response = new responseMessage.GenericFailureMessage();
       return callback(null, response, response.code);
     }

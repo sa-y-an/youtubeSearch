@@ -11,6 +11,9 @@ let mongoMainHost,
   gmailHost,
   redisHOST,
   redisPORT,
+  redisUserName,
+  redisPassword,
+  redisDBNumber,
   ytApiKey1;
 
 if (environment === 'production') {
@@ -23,6 +26,9 @@ if (environment === 'production') {
   mongoMainPass = process.env.DEV_MONGO_PASSWORD;
   redisHOST = process.env.redisHOST;
   redisPORT = process.env.redisPORT;
+  redisUserName = process.env.redisUserName;
+  redisPassword = process.env.redisPassword;
+  redisDBNumber = process.env.redisDBNumber;
   ytApiKey1 = process.env.YT_API_KEY1;
 }
 
@@ -51,3 +57,6 @@ global.YT_API_KEY1 = ytApiKey1;
 // redis
 global.redisHOST = redisHOST;
 global.redisPORT = redisPORT;
+global.redisPassword = redisPassword;
+global.redisUserName = redisUserName;
+global.redisDBNumber = redisDBNumber;

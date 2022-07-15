@@ -23,6 +23,9 @@ function getRedisCoonfig() {
       port: redisPORT,
       host: redisHOST,
     },
+    username: redisUserName,
+    password: redisPassword,
+    database: parseInt(redisDBNumber),
   };
 
   return redisConfig;
