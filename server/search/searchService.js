@@ -56,11 +56,11 @@ async function mainJob() {
   try {
     const searchQuery = {
       key: YT_API_KEY,
-      part: 'snippet',
+      part: searchConfig.part,
       q: commonConfig.query,
       publishedAfter: searchConfig.publishedAfter,
-      type: 'video',
-      oder: 'date',
+      type: searchConfig.type,
+      oder: searchConfig.order,
       maxResults: parseInt(searchConfig.maxResults),
     };
 
