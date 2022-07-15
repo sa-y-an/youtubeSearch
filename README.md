@@ -65,7 +65,8 @@ Currently following APIs are supported
 - It takes the following params
   - page : pageNumber
   - limit : no of results per page
-  - sort : sort by title, publishedDate
+  - sort : sort by title, publishTime
+- use '-' before a field to sort by descending order
 
 To get more details import the following collection
 Postman Collection Link
