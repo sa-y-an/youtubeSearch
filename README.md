@@ -4,6 +4,10 @@
 - Provides search, paginated response fucntionality
 - Provides an option to add unlimited youtube API credentials, on expiry a new one is taken for the next cron job
 
+## Tech Stack
+
+- NodeJs + Express + Redis + MongoDB
+
 ## Main Architecture and Process
 
 - On starting of the server, it calls a function which starts only once
