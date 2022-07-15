@@ -60,7 +60,7 @@ async function mainJob() {
       publishedAfter: searchConfig.publishedAfter,
       type: 'video',
       oder: 'date',
-      maxResults: 5,
+      maxResults: parseInt(searchConfig.maxResults),
     };
 
     const youtubeData = await google.youtube('v3').search.list(searchQuery);
@@ -87,31 +87,36 @@ async function mainJob() {
   }
 }
 
+async function getFilteredData(data) {
+  const promises = data.map(async (el) => {
+    const flag = !(await redisClient.sIsMember('ytIds', el.ytId));
+    if (flag) return el;
+    return flag;
+  });
+  const results = await Promise.all(promises);
+  return results;
+}
+
 module.exports = {
   /**API to check if new results exists and if it does store them in database */
   generateNewResults: async (req, callback) => {
     let response;
     try {
       const data = await mainJob();
-      const existingIds = await Search.find().select('ytId -_id');
-
-      // using hashset to cache the results
-      // to be replaced by redis
-      const cachedIds = new Set();
-      existingIds.forEach((el) => cachedIds.add(el.ytId));
-
+      const trydata = await getFilteredData(data);
       const newdata = [];
-      data.forEach((el) => {
-        if (!cachedIds.has(el.ytId)) {
+      const redisdata = [];
+      trydata.forEach(async (el) => {
+        if (el != false) {
           newdata.push(el);
+          console.log(el.ytId);
+          await redisClient.sAdd('ytIds', el.ytId);
         }
       });
 
-      const len = newdata.length;
       const result = await Search.insertMany(newdata);
-
       response = new responseMessage.GenericSuccessMessage();
-      response.len = len;
+      // response.len = len;
       response.data = result;
       return callback(null, response, response.code);
     } catch (err) {
