@@ -52,6 +52,13 @@ async function getPaginatedResults(query, options, callback) {
   }
 }
 
+/** Function to fetch results from youtube */
+/* It currently fetches only the first page,
+ * It can be further optimized to to go to the next page using the nextPage token
+ * And fetch more results
+ * Since the assignment asked to frequently updated data in very less interval I haven't implemented
+ * going to next page yet, assuming most recent data to be in the top 50 results
+ */
 async function mainJob() {
   try {
     const searchQuery = {
@@ -131,6 +138,9 @@ module.exports = {
         if (el != false) {
           newdata.push(el);
           console.log(el.ytId);
+          // One might argue to use insert many here as well
+          // But since at the start it cahes all the database and
+          // it updates only on new addition I preferred to update each Id individually
           await redisClient.sAdd('ytIds', el.ytId);
         }
       });
