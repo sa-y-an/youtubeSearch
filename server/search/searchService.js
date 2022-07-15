@@ -87,7 +87,10 @@ async function mainJob() {
   }
 }
 
+/** Async function to check if the data exists in cache */
 async function getFilteredData(data) {
+  // This call could be further optimized by fetching all the data once in a hash set
+  // and then querrying, instead of individually querring for each element
   const promises = data.map(async (el) => {
     const flag = !(await redisClient.sIsMember('ytIds', el.ytId));
     if (flag) return el;
@@ -105,7 +108,7 @@ module.exports = {
       const data = await mainJob();
       const trydata = await getFilteredData(data);
       const newdata = [];
-      const redisdata = [];
+
       trydata.forEach(async (el) => {
         if (el != false) {
           newdata.push(el);
