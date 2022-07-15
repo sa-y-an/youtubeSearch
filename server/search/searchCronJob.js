@@ -29,7 +29,9 @@ async function cronJob() {
 var task;
 
 /** cronjob sceduler */
-function start() {
+async function start() {
+  const ping = await redisClient.ping();
+  console.log(ping);
   console.log('INFO ::: Starting CronJob');
   console.log(
     `INFO ::: It is scheduled as per the cron ${commonConfig.cronSchedule}`

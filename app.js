@@ -10,6 +10,8 @@ const cors = require('cors');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const redis = require('redis');
+const { promisify } = require('util');
 const app = (module.exports = express());
 
 // dont add any config before this line
@@ -50,6 +52,7 @@ mongoose.mainConnection.on('disconnected', function () {
 process.on('SIGINT', async function () {
   const searchCronJon = require('./server/search/searchCronJob');
   searchCronJon.stop();
+  await redisClient.quit();
   mongoose.mainConnection.close(function () {
     console.log(
       'Mongoose main connection disconnected through app termination'
@@ -62,6 +65,7 @@ process.on('SIGINT', async function () {
 process.on('exit', async function () {
   const searchCronJon = require('./server/search/searchCronJob');
   searchCronJon.stop();
+  await redisClient.quit();
   mongoose.mainConnection.close(function () {
     console.log(
       'Mongoose main connection disconnected through app termination'
@@ -70,6 +74,30 @@ process.on('exit', async function () {
   });
 });
 
+/**Redis setup */
+const redisClient = redis.createClient({
+  socket: {
+    port: 6379,
+    host: '127.0.0.1',
+  },
+});
+
+(async () => {
+  // Connect to redis server
+  await redisClient.connect();
+})();
+
+console.log('Attempting to connect to redis');
+redisClient.on('connect', () => {
+  console.log('Redis Client is Sucessfully Connected!');
+});
+
+// Log any error that may occur to the console
+redisClient.on('error', (err) => {
+  console.log(`REDIS Error ::: ${err}`);
+});
+
+global.redisClient = redisClient;
 /** Application setup with various global external middlewares */
 
 // body and cookie parser
