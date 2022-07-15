@@ -3,6 +3,8 @@ const cron = require('node-cron');
 const commonConfig = require('../commonconfig.json');
 const searchService = require('./searchService');
 const responseHelper = require('../utils/responseHelper');
+const Search = require('./searchModel');
+const mongoose = require('mongoose');
 
 /** Actual CronJob */
 async function cronJob() {
@@ -28,17 +30,36 @@ async function cronJob() {
 
 var task;
 
+async function cacheData() {
+  const results = await Search.find().select('+ytId -_id');
+  const existingIds = [];
+  results.forEach((el) => existingIds.push(el.ytId));
+  try {
+    await redisClient.sAdd('ytIds', existingIds);
+  } catch (err) {
+    console.log('ERROR in caching in redis', err);
+  }
+}
+
 /** cronjob sceduler */
 async function start() {
   const ping = await redisClient.ping();
   console.log(ping);
-  console.log('INFO ::: Starting CronJob');
-  console.log(
-    `INFO ::: It is scheduled as per the cron ${commonConfig.cronSchedule}`
-  );
-  task = cron.schedule(commonConfig.cronSchedule, () => {
-    cronJob();
-  });
+  cacheData()
+    .then(() => {
+      console.log('INFO ::: Starting CronJob');
+      console.log(
+        `INFO ::: It is scheduled as per the cron ${commonConfig.cronSchedule}`
+      );
+      task = cron.schedule(commonConfig.cronSchedule, () => {
+        cronJob();
+      });
+    })
+    .catch((err) => {
+      console.log('ERORR in caching redis', err);
+      console.log('Thus exiting');
+      process.exit(0);
+    });
 }
 
 /** Wrapper function to make the cronJob run only once
