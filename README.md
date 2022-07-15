@@ -46,6 +46,10 @@ docker run -it -p 8004:8004 '<dir_name>/<project_name>'
 
 - You can see the API running at 127.0.0.1:8004
 
+### Note
+
+- If all API keys expire it will stop the application and exit
+
 ### API Docs
 
 Currently following APIs are supported
