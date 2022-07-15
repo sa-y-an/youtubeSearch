@@ -16,7 +16,7 @@
 
 - To change certain parameters eg the predefined query
 - First flush the redis database
-- Go to [server/commonconfig.json](server/commonconfig.json) you can change either the cron job schedule ( following the cron syntax (https://www.npmjs.com/package/node-cron)) or the predefined query
+- Go to [server/commonconfig.json](server/commonconfig.json) you can change either the cron job schedule ( following the cron syntax (https://www.npmjs.com/package/node-cron)). Make it "\* \* \* \* \* \*" to run every second.Also can change the predefined query.
 - You can also change seach parameters such as publishedAfter etc from [server/search/searchConfig.json](server/search/searchConfig.json)
 
 ## Installation and Setup
