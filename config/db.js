@@ -7,7 +7,7 @@ function getMongoDatabaseUrls() {
 
   if (ENVIRONMENT === 'production') {
     mongoMainUrl = `mongodb+srv://${mongoMainUser}:${mongoMainPass}@${mongoMainHost}/${mongoMainDB}?retryWrites=true&w=majority`;
-  } else if (ENVIRONMENT === 'development') {
+  } else {
     mongoMainUrl = `mongodb+srv://${mongoMainUser}:${mongoMainPass}@${mongoMainHost}/${mongoMainDB}?retryWrites=true&w=majority`;
   }
   return { mongoMainUrl };
@@ -15,6 +15,21 @@ function getMongoDatabaseUrls() {
 
 let { mongoMainUrl } = getMongoDatabaseUrls();
 
+function getRedisCoonfig() {
+  let redisConfig;
+
+  redisConfig = {
+    socket: {
+      port: redisPORT,
+      host: redisHOST,
+    },
+  };
+
+  return redisConfig;
+}
+const redisConfig = getRedisCoonfig();
+
 module.exports = {
   mongoMainUrl: mongoMainUrl,
+  redisConfig,
 };

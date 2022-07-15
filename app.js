@@ -75,12 +75,8 @@ process.on('exit', async function () {
 });
 
 /**Redis setup */
-const redisClient = redis.createClient({
-  socket: {
-    port: 6379,
-    host: '127.0.0.1',
-  },
-});
+const redisConfig = configDB.redisConfig;
+const redisClient = redis.createClient(redisConfig);
 
 (async () => {
   // Connect to redis server

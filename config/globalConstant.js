@@ -9,6 +9,8 @@ let mongoMainHost,
   gmailPass,
   gmailPort,
   gmailHost,
+  redisHOST,
+  redisPORT,
   ytApiKey1;
 
 if (environment === 'production') {
@@ -19,7 +21,8 @@ if (environment === 'production') {
   mongoMainDB = process.env.DEV_MONGO_MAIN_DB;
   mongoMainUser = process.env.DEV_MONGO_USERNAME;
   mongoMainPass = process.env.DEV_MONGO_PASSWORD;
-
+  redisHOST = process.env.redisHOST;
+  redisPORT = process.env.redisPORT;
   ytApiKey1 = process.env.YT_API_KEY1;
 }
 
@@ -44,3 +47,7 @@ global.gmailHost = gmailHost;
 
 // Youtube API Keys
 global.YT_API_KEY1 = ytApiKey1;
+
+// redis
+global.redisHOST = redisHOST;
+global.redisPORT = redisPORT;
