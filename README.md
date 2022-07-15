@@ -39,7 +39,7 @@
 
 - In the same directory which contains the `Dockerfile` run the following commands
 
-```
+```sh
 docker build -t '<dir_name>/<project_name>' .
 docker run -it -p 8004:8004 '<dir_name>/<project_name>'
 ```
@@ -68,7 +68,10 @@ Currently following APIs are supported
   - sort : sort by title, publishTime
 - use '-' before a field to sort by descending order
 
-To get more details import the following collection
-Postman Collection Link
+Note :
 
-- https://www.getpostman.com/collections/8661968a741177a51d0d
+- Replace {{URL}} with 127.0.0.1:8004
+
+- To get more details import the following collection
+  Postman Collection Link
+  - https://www.getpostman.com/collections/8661968a741177a51d0d

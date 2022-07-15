@@ -1,4 +1,4 @@
 {
     "query" : "cricket",
-    "cronSchedule" : "*/59 * * * * *"
+    "cronSchedule" : "0 */1 * * * *"
 }
