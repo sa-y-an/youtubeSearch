@@ -56,12 +56,12 @@ Currently following APIs are supported
 
 1. Search
 
-- {{URL}}/v1/api/scrape/search/text?text=virat
+- `{{URL}}/v1/api/scrape/search/text?text=virat`
 - after text= provide the key word you want to search for
 
 2. Get All Stored Data in a paginated form
 
-- {{URL}}/v1/api/scrape/get/storedResults
+- `{{URL}}/v1/api/scrape/get/storedResults`
 - It takes the following params
   - page : pageNumber
   - limit : no of results per page
