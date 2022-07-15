@@ -4,6 +4,21 @@
 - Provides search, paginated response fucntionality
 - Provides an option to add unlimited youtube API credentials, on expiry a new one is taken for the next cron job
 
+## Main Architecture and Process
+
+- On starting of the server, it calls a function which starts only once
+- The function first caches all present ids in Redis
+- Then it creates a cron job that calls the youtube api in the background
+- If a new video is found which is not in the redis cache its id is pushed in Redis and its info in DB
+- Uses Mongoose Paginate to paginate results and MongoDB Atlas index search to provide search results based on predefined queris
+
+## Tinkering Configs
+
+- To change certain parameters eg the predefined query
+- First flush the redis database
+- Go to server/commonconfig.json you can change either the cron job schedule ( following the cron syntax (https://www.npmjs.com/package/node-cron)) or the predefined query
+- You can also change seach parameters such as publishedAfter etc from server/search/searchConfig.json
+
 Postman Collection Link
 
 - https://www.getpostman.com/collections/8661968a741177a51d0d
@@ -32,3 +47,5 @@ Postman Collection Link
 docker build -t '<dir_name>/<project_name>' .
 docker run -it -p 8004:8004 '<dir_name>/<project_name>'
 ```
+
+- You can see the API running at 127.0.0.1:8004
