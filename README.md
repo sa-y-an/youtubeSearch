@@ -16,8 +16,8 @@
 
 - To change certain parameters eg the predefined query
 - First flush the redis database
-- Go to server/commonconfig.json you can change either the cron job schedule ( following the cron syntax (https://www.npmjs.com/package/node-cron)) or the predefined query
-- You can also change seach parameters such as publishedAfter etc from server/search/searchConfig.json
+- Go to [server/commonconfig.json](server/commonconfig.json) you can change either the cron job schedule ( following the cron syntax (https://www.npmjs.com/package/node-cron)) or the predefined query
+- You can also change seach parameters such as publishedAfter etc from [server/search/searchConfig.json](server/search/searchConfig.json)
 
 ## Installation and Setup
 
@@ -32,7 +32,7 @@
 - set NODE_ENV=development in the `.env` file
 
 - You also need to generate google API keys for the project ( refer https://developers.google.com/youtube/v3/getting-started)
-- Once you have access to the keys create a json file withe the title `apiKeys.json` and put it in the config folder in the format given in `exampleAPIKeys.json`
+- Once you have access to the keys create a json file withe the title `apiKeys.json` and put it in the config folder in the format given in [exampleAPIKeys.json](exampleAPIKeys.json)
 - Now your set up is ready and you are good to go !
 
 ### Running the code
