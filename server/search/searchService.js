@@ -1,6 +1,7 @@
 'use strict';
 
 const { google } = require('googleapis');
+const gaxios = require('gaxios');
 const commonConfig = require('../commonconfig.json');
 const searchConfig = require('./searchConfig.json');
 const responseMessage = require('../utils/responseMessage');
@@ -83,6 +84,12 @@ async function mainJob() {
 
     return results;
   } catch (err) {
+    console.log('API KEYS ERROR');
+    if (err instanceof gaxios.GaxiosError) {
+      console.log(err.message);
+      process.exit(0);
+    }
+    console.log(err.message);
     console.log(err);
   }
 }
@@ -123,6 +130,7 @@ module.exports = {
       response.data = result;
       return callback(null, response, response.code);
     } catch (err) {
+      console.log(err);
       console.log('ERROR in generate try catch ::: ', err);
       response = new responseMessage.GenericFailureMessage();
       return callback(null, response, response.code);

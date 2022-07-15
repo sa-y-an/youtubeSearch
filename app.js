@@ -32,7 +32,7 @@ mongoose.mainConnection.on('connected', async function () {
   console.log('Connected to main MongoDB ');
   mongoose.set('debug', true);
   const searchCronJon = require('./server/search/searchCronJob');
-  searchCronJon.start();
+  // searchCronJon.start();
 });
 
 // If the connection throws an error
