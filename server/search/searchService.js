@@ -189,7 +189,7 @@ module.exports = {
     };
     const limit = parseInt(req.query.limit) || 10;
     const page = parseInt(req.query.page) || 1;
-    const sort = req.query.sort || 'name';
+    const sort = req.query.sort || 'publishedDate';
     const options = {
       page: page,
       limit: limit,

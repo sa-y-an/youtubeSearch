@@ -49,3 +49,20 @@ docker run -it -p 8004:8004 '<dir_name>/<project_name>'
 ```
 
 - You can see the API running at 127.0.0.1:8004
+
+### API Docs
+
+Currently following APIs are supported
+
+1. Search
+
+- {{URL}}/v1/api/scrape/search/text?text=virat
+- after text= provide the key word you want to search for
+
+2. Get All Stored Data in a paginated form
+
+- {{URL}}/v1/api/scrape/get/storedResults
+- It takes the following params
+  - page : pageNumber
+  - limit : no of results per page
+  - sort : sort by title, publishedDate
