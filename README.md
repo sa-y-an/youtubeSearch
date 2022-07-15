@@ -19,10 +19,6 @@
 - Go to server/commonconfig.json you can change either the cron job schedule ( following the cron syntax (https://www.npmjs.com/package/node-cron)) or the predefined query
 - You can also change seach parameters such as publishedAfter etc from server/search/searchConfig.json
 
-Postman Collection Link
-
-- https://www.getpostman.com/collections/8661968a741177a51d0d
-
 ## Installation and Setup
 
 1. Install Docker
@@ -66,3 +62,8 @@ Currently following APIs are supported
   - page : pageNumber
   - limit : no of results per page
   - sort : sort by title, publishedDate
+
+To get more details import the following collection
+Postman Collection Link
+
+- https://www.getpostman.com/collections/8661968a741177a51d0d
