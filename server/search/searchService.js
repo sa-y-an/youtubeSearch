@@ -55,7 +55,7 @@ async function getPaginatedResults(query, options, callback) {
 async function mainJob() {
   try {
     const searchQuery = {
-      key: YT_API_KEY1,
+      key: YT_API_KEY,
       part: 'snippet',
       q: commonConfig.query,
       publishedAfter: searchConfig.publishedAfter,
@@ -86,11 +86,16 @@ async function mainJob() {
   } catch (err) {
     console.log('API KEYS ERROR');
     if (err instanceof gaxios.GaxiosError) {
-      console.log(err.message);
-      process.exit(0);
+      if (API_KEYS_ARR.length === 0) {
+        console.log('All API kays have expired');
+        console.log('Thus terminating process');
+        process.exit(0);
+      }
+      console.log(
+        'last api key has expired, using next one in the next cron job'
+      );
+      YT_API_KEY = API_KEYS_ARR.pop();
     }
-    console.log(err.message);
-    console.log(err);
   }
 }
 
@@ -113,6 +118,12 @@ module.exports = {
     let response;
     try {
       const data = await mainJob();
+      if (data === undefined) {
+        response = new responseMessage.GenericFailureMessage();
+        response.message = 'API Key expired';
+        return callback(null, response, response.code);
+      }
+
       const trydata = await getFilteredData(data);
       const newdata = [];
 

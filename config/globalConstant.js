@@ -1,5 +1,6 @@
 'use strict';
 
+const apiKeys = require('./apiKeys.json');
 const environment = process.env.NODE_ENV;
 let mongoMainHost,
   mongoMainDB,
@@ -29,7 +30,6 @@ if (environment === 'production') {
   redisUserName = process.env.redisUserName;
   redisPassword = process.env.redisPassword;
   redisDBNumber = process.env.redisDBNumber;
-  ytApiKey1 = process.env.YT_API_KEY1;
 }
 
 global.ENVIRONMENT = environment;
@@ -60,3 +60,10 @@ global.redisPORT = redisPORT;
 global.redisPassword = redisPassword;
 global.redisUserName = redisUserName;
 global.redisDBNumber = redisDBNumber;
+
+// ytAPIKey
+
+let apiKeysArr = apiKeys.ApiKeys;
+global.API_KEYS_ARR = apiKeysArr;
+
+global.YT_API_KEY = apiKeysArr.pop();

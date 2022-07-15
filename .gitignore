@@ -47,3 +47,5 @@ package-lock.json
 .vscode
 *.env
 !example.env
+
+*apiKeys.json
