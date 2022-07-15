@@ -1,7 +1,7 @@
 # Youtube Search
 
 - This is an application that runs a cron job to cache a search querry from youtube.
-- Provides search, paginated response fucntionality
+- Provides search, paginated response functionality
 - Provides an option to add unlimited youtube API credentials, on expiry a new one is taken for the next cron job
 
 ## Tech Stack
@@ -10,7 +10,7 @@
 
 ## Main Architecture and Process
 
-- On starting of the server, it calls a function which starts only once
+- On starting of the server, it calls a function which runs only once
 - The function first caches all present ids in Redis
 - Then it creates a cron job that calls the youtube api in the background
 - If a new video is found which is not in the redis cache its id is pushed in Redis and its info in DB
